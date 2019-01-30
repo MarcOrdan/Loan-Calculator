@@ -1,9 +1,21 @@
 // listen for submit
-document.getElementById('loan-form').addEventListener('submit', calculateResults);
+document.getElementById('loan-form').addEventListener('submit', function(e){
+
+    //hide results
+    document.getElementById('results').style.display = 'none';
+
+    //show loader
+    document.getElementById('loading').style.display = 'block';
+
+    setTimeout(calculateResults,1000);
+
+    e.preventDefault();
+
+});
 
 
 //calculate function
-function calculateResults(e){
+function calculateResults(){
 
     //UI vars
     const amount =  document.getElementById('amount');
@@ -25,13 +37,16 @@ function calculateResults(e){
         monthlyPayment.value = monthly.toFixed(2);
         totalPayment.value = (monthly * calculatedPayments).toFixed(2);
         totalInterest.value = ((monthly * calculatedPayments) - principal).toFixed(2);
+        
+        //show results and hide loading
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('loading').style.display = 'none';
     }  else {
             showError('Please check your input')
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('results').style.display = 'none';
         }
-    
 
-
-    e.preventDefault();
 }
 
 //error function
